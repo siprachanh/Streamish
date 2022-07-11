@@ -18,10 +18,13 @@ GO
 
 CREATE TABLE [UserProfile] (
   [Id] INTEGER PRIMARY KEY IDENTITY NOT NULL,
-  [Name] VARCHAR(25) NOT NULL,
-  [Email] VARCHAR(255) NOT NULL,
-  [ImageUrl] VARCHAR(255) NULL,
-  [DateCreated] DATETIME NOT NULL
+  [FirebaseUserId] NVARCHAR(28) NOT NULL,
+  [Name] NVARCHAR(255) NOT NULL,
+  [Email] NVARCHAR(255) NOT NULL,
+  [ImageUrl] NVARCHAR(255) NULL,
+  [DateCreated] DATETiME NOT NULL,
+
+  CONSTRAINT UQ_FirebaseUserId UNIQUE(FirebaseUserId)
 )
 GO
 
@@ -62,11 +65,10 @@ GO
 
 SET IDENTITY_INSERT [UserProfile] ON
 INSERT INTO [UserProfile]
-    ([Id], [Name], [Email], [DateCreated], [ImageUrl])
+    ([Id],[FirebaseUserId], [Name], [Email], [DateCreated] )
 VALUES
-    (1, 'Groucho', 'groucho@marx.com', SYSDATETIME(), NULL),
-    (2, 'Harpo', 'harpo@marx.com', SYSDATETIME(), NULL),
-    (3, 'Chico', 'chico@marx.com', SYSDATETIME(), NULL);
+   	(1, 'zVUIzIOlWmdzzHMWYKYW5KY4SiF3', 'Grace Wisdom', 'graceandwisdom@gmail.com', SYSDATETIME()),
+  (2, 'qmo06HjHaQTuks4i8Gav0G7n35E2', 'Wisdom Grace', 'wisdomandgrace@gmail.com', SYSDATETIME());
 SET IDENTITY_INSERT [UserProfile] OFF
 
 
@@ -77,7 +79,7 @@ VALUES
     (1, '2019-10-3', 'Erlang the Movie', 'A beautiful film about an elegant, but ugly lanaguage', 'https://www.youtube.com/embed/xrIjfIjssLE', 1),
     (2, '2019-5-20', 'Early Computing', 'Early Computing: Crash Course Computer Science #1', 'https://www.youtube.com/embed/O5nskjZ_GoI', 2),
     (3, '2020-1-2', 'C# 101', 'What is C#? It''s a powerful and widely used programming language that you can use to make websites, games, mobile apps, desktop apps and more with .NET', 'https://www.youtube.com/embed/BM4CHBmAPh4', 2),
-    (4, '2020-12-15', '.NET 101', 'What is .NET, anyway?', 'https://www.youtube.com/embed/eIHKZfgddLM', 3)
+    (4, '2020-12-15', '.NET 101', 'What is .NET, anyway?', 'https://www.youtube.com/embed/eIHKZfgddLM', 1)
 SET IDENTITY_INSERT [Video] OFF
 
 
@@ -86,6 +88,6 @@ INSERT INTO [Comment]
     ([Id], [Message], [VideoId], [UserProfileId])
 VALUES
     (1, 'I have thoughts about this video! ...thoughts AND OPINIONS!', 1, 2),
-    (2, 'This video makes me angry on the internet!!!', 1, 3)
+    (2, 'This video makes me angry on the internet!!!', 1, 2)
 SET IDENTITY_INSERT [Comment] OFF
 

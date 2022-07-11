@@ -276,10 +276,6 @@ namespace Streamish.Repositories
 
 
 
-            
-        
-
-
         public void Add(Video video)
         {
             using (var conn = Connection)
@@ -403,6 +399,11 @@ namespace Streamish.Repositories
                     }
                 }
             }
+        }
+
+        public List<Video> Hottest(DateTime sinceDate)
+        {
+            throw new NotImplementedException();
         }
     }
 }

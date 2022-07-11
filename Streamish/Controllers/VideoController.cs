@@ -1,10 +1,13 @@
-﻿using System;
+﻿
+using Microsoft.AspNetCore.Authorization;
+using System;
 using Microsoft.AspNetCore.Mvc;
 using Streamish.Repositories;
 using Streamish.Models;
 
 namespace Streamish.Controllers
 {
+    [Authorize]
     //this VideoController is created as an API (standard Web API controller) that allows us to CRUD videos
     //Web api controller class inherits from the ControllerBase class instead of Controller
     [Route("api/[controller]")]
@@ -125,6 +128,11 @@ namespace Streamish.Controllers
         public IActionResult Search(string q, bool sortDesc)
         {
             return Ok(_videoRepository.Search(q, sortDesc));
+        }
+        [HttpGet("Hottest")]
+        public IActionResult Hottest(DateTime since)
+        {
+            return Ok(_videoRepository.Hottest(since));
         }
     }
 }

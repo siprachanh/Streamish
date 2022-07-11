@@ -7,6 +7,11 @@ namespace Streamish.Models
     public class UserProfile
     {
         public int Id { get; set; }
+       
+        //update UP model to include a FBUId prop (string)
+        [Required]
+        [StringLength(28, MinimumLength = 28)]
+        public string FirebaseUserId { get; set; }
 
         [Required]
         public string Name { get; set; }

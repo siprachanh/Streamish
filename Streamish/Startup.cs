@@ -1,3 +1,4 @@
+//using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -29,6 +30,26 @@ namespace Streamish
         {
             //register VideoRepo with Asp.Net
             services.AddTransient<IVideoRepository, VideoRepository>();
+            //configures web API to uderstand and validate Firebase JWT auth
+            var firebaseProjectId = Configuration.GetValue<string>("FirebaseProjectId");
+            var googleTokenUrl = $"https://securetoken.google.com/{firebaseProjectId}";
+            services
+                .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.Authority = googleTokenUrl;
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidIssuer = googleTokenUrl,
+                        ValidateAudience = true,
+                        ValidAudience = firebaseProjectId,
+                        ValidateLifetime = true
+                    };
+                });
+
+
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -49,6 +70,8 @@ namespace Streamish
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            //to call app.UseAuthentication();
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
