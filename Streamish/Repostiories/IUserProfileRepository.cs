@@ -12,5 +12,6 @@ namespace Streamish.Repostiories
         void Add(UserProfile userProfile);
         void Update(UserProfile userProfile);
         void Delete(int id);
+        UserProfile GetByFirebaseUserId(string firebaseUserId);
     }
 }
